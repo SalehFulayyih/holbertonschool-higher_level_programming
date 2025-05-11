@@ -1,2 +1,2 @@
 #!/usr/bin/python3
-__import__('pyiscool')
+__import__('os').system('echo "#pythoniscool"')
