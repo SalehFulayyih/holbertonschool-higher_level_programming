@@ -1,0 +1,1 @@
+Solve all tasks of Python-data_structures
