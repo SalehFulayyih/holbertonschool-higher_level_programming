@@ -1,4 +1,5 @@
 #!/usr/bin/python3
+
 def roman_to_int(roman_string):
     if not isinstance(roman_string, str):
         return 0
@@ -7,7 +8,8 @@ def roman_to_int(roman_string):
     total = 0
     for i in range(len(roman_string)):
         value = roman_map.get(roman_string[i], 0)
-        if i + 1 < len(roman_string) and value < roman_map.get(roman_string[i + 1], 0):
+        if (i + 1 < len(roman_string) and
+                value < roman_map.get(roman_string[i + 1], 0)):
             total -= value
         else:
             total += value
