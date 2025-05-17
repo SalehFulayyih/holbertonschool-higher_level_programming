@@ -1,7 +1,10 @@
 #!/usr/bin/python3
+"""
+Module for lazy matrix multiplication using NumPy.
+This module defines a function lazy_matrix_mul that multiplies two matrices using NumPy.
+"""
 
 import numpy as np
-
 
 def lazy_matrix_mul(m_a, m_b):
     """
@@ -22,14 +25,14 @@ def lazy_matrix_mul(m_a, m_b):
         ValueError: If the matrices contain invalid data types or their shapes
                     do not align for multiplication.
     """
-
+    
     # Ensure the matrices contain only numeric data
     try:
         m_a = np.array(m_a, dtype=np.float64)
         m_b = np.array(m_b, dtype=np.float64)
     except ValueError:
         raise ValueError("invalid data type for einsum")
-
+    
     try:
         return np.matmul(m_a, m_b)
     except ValueError as e:
