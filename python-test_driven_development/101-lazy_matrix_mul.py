@@ -16,30 +16,27 @@ def lazy_matrix_mul(m_a, m_b):
         m_b: Second matrix
 
     Returns:
-        The product of the two matrices as a Python list.
+        The product of the two matrices as a NumPy array.
 
     Raises:
         ValueError: If scalar input or invalid types prevent multiplication
     """
     try:
-        # Attempt to create arrays without forcing float
+        # Attempt to create arrays
         a = np.array(m_a)
         b = np.array(m_b)
 
-        # Reject object-dtype (usually from strings or mixed types)
+        # Reject object-dtype (likely caused by strings or invalid input)
         if a.dtype == object or b.dtype == object:
-            # Try converting to float to confirm it's invalid
             np.array(m_a, dtype=float)
             np.array(m_b, dtype=float)
 
+        # Check for scalar or 1D input
         if a.ndim < 2 or b.ndim < 2:
             raise ValueError(
                 "Scalar operands are not allowed, use '*' instead")
 
-        # Use dot for expected error message formatting
-        result = np.dot(a, b)
-
-        return result.tolist()
+        return np.dot(a, b)  # Return as NumPy array to preserve format
 
     except TypeError:
         raise ValueError("Scalar operands are not allowed, use '*' instead")
