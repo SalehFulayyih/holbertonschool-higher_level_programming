@@ -4,7 +4,24 @@ import numpy as np
 
 
 def lazy_matrix_mul(m_a, m_b):
-    """Multiplies two matrices using NumPy."""
+    """
+    Multiplies two matrices using NumPy.
+
+    This function performs matrix multiplication on two matrices `m_a` and `m_b`
+    using NumPy's `matmul` function. It raises an exception if the matrices have
+    incompatible shapes or contain invalid data types.
+
+    Args:
+        m_a (list of list of int/float): The first matrix.
+        m_b (list of list of int/float): The second matrix.
+
+    Returns:
+        numpy.ndarray: The result of multiplying matrices `m_a` and `m_b`.
+
+    Raises:
+        ValueError: If the matrices contain invalid data types or their shapes
+                    do not align for multiplication.
+    """
 
     # Ensure the matrices contain only numeric data
     try:
