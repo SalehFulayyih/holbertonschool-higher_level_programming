@@ -1,44 +1,99 @@
 #!/usr/bin/python3
-import numpy as np
+"""Module for lazy_matrix_mul method."""
 
-"""
-This module provides a function `lazy_matrix_mul` that multiplies two matrices
-using the NumPy library. The function ensures that the matrices are in the correct 
-format and raises errors if the shapes do not align or if the data is invalid.
-"""
+import numpy
 
 
 def lazy_matrix_mul(m_a, m_b):
-    """Multiplies two matrices using NumPy.
-
-    This function multiplies two matrices m_a and m_b using the NumPy library. 
-    It ensures that the matrices are in the correct format and raises an error 
-    if the shapes of the matrices do not align for multiplication.
-
+    """Multiplies one matrix by another.
     Args:
-        m_a (list of list of int/float): The first matrix.
-        m_b (list of list of int/float): The second matrix.
-
+        m_a: the first matrix
+        m_b: the second matrix
     Returns:
-        numpy.ndarray: The resulting matrix after multiplication.
-
+        matrix: the product
     Raises:
-        ValueError: If the matrices contain non-numeric data or if the shapes
-        of the matrices do not align.
+        TypeError: If m_a or m_b are not lists.
+        TypeError: If m_a or m_b are not lists of lists.
+        ValueError: If m_a or m_b are empty lists/matrices.
+        TypeError: If m_a or m_b contain a non int/float.
+        TypeError: If m_a or m_b are not rectangular.
+        ValueError: If m_a or m_b can't be multiplied.
     """
-    try:
-        # Ensure the matrices contain only numeric data and convert to NumPy arrays
-        m_a = np.array(m_a, dtype=np.float64)
-        m_b = np.array(m_b, dtype=np.float64)
-    except ValueError:
-        raise ValueError("invalid data type for einsum")
 
-    try:
-        # Perform matrix multiplication
-        result = np.matmul(m_a, m_b)
-        # Convert result to integers to match expected output format
-        return result.astype(int)
-    except ValueError as e:
-        # If the matrices' shapes do not align, raise an error with details
-        raise ValueError(
-            f"shapes {m_a.shape} and {m_b.shape} not aligned: {m_a.shape[1]} (dim 1) != {m_b.shape[0]} (dim 0)") from e
+    '''
+    if not isinstance(m_a, list):
+        raise TypeError("m_a must be a list")
+    if not isinstance(m_b, list):
+        raise TypeError("m_b must be a list")
+    '''
+    m_a_empty = False
+    m_b_empty = False
+    m_a_notrect = False
+    m_b_notrect = False
+    m_a_notnum = False
+    m_b_notnum = False
+    m_a_scalar = False
+    m_b_scalar = False
+    for row in m_a:
+        if not isinstance(row, list):
+            m_a_scalar = True
+        if len(row) != len(m_a[0]):
+            m_a_notrect = True
+        for num in row:
+            if not isinstance(num, (int, float)):
+                m_a_notnum = True
+
+    for row in m_b:
+        if not isinstance(row, list):
+            m_b_scalar = True
+        if len(row) != len(m_b[0]):
+            m_b_notrect = True
+        for num in row:
+            if not isinstance(num, (int, float)):
+                m_b_notnum = True
+
+    '''
+    if len(m_a) == 0 or (len(m_a) == 1 and len(m_a[0]) == 0):
+        raise ValueError("m_a can't be empty")
+
+    if len(m_b) == 0 or (len(m_b) == 1 and len(m_b[0]) == 0)x:
+        raise ValueError("m_b can't be empty")
+    '''
+
+    if m_a_scalar:
+        raise TypeError("Scalar operands are not allowed, use '*' instead")
+
+    if m_b_scalar:
+        raise TypeError("Scalar operands are not allowed, use '*' instead")
+
+    if m_a_notnum:
+        raise TypeError("invalid data type for einsum")
+
+    if m_b_notnum:
+        raise TypeError("invalid data type for einsum")
+
+    if m_a_notrect:
+        raise ValueError("setting an array element with a sequence.")
+
+    if m_b_notrect:
+        raise ValueError("setting an array element with a sequence.")
+
+    '''
+    if len(m_a[0]) != len(m_b):
+        raise ValueError("m_a and m_b can't be multiplied")
+
+    res = [[] for i in range(len(m_a))]
+
+    for i in range(len(m_a)):
+        for j in range(len(m_b[0])):
+            c = 0
+            for k in range(len(m_b)):
+                c += m_a[i][k] * m_b[k][j]
+            res[i].append(c)
+    '''
+    return numpy.matrix(m_a) * numpy.matrix(m_b)
+
+if __name__ == "__main__":
+
+    import doctest
+    doctest.testfile("tests/101-lazy_matrix_mul.txt")
