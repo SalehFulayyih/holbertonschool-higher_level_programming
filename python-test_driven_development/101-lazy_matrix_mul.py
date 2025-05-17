@@ -93,6 +93,7 @@ def lazy_matrix_mul(m_a, m_b):
     '''
     return numpy.matrix(m_a) * numpy.matrix(m_b)
 
+
 if __name__ == "__main__":
 
     import doctest
