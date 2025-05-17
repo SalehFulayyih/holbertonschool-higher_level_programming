@@ -35,16 +35,18 @@ def lazy_matrix_mul(m_a, m_b):
     # Ensure that the matrices have compatible shapes for multiplication
     if a.shape[1] != b.shape[0]:
         raise ValueError(
-            "shapes {} and {} not aligned: {} (dim 1) != {} (dim 0)".format(
-                a.shape, b.shape, a.shape[1], b.shape[0]
+            "shapes ({},{}) and ({},{}) not aligned: {} (dim 1) != {} (dim 0)".format(
+                a.shape[0], a.shape[1], b.shape[0], b.shape[1],
+                a.shape[1], b.shape[0]
             )
         )
 
     # Check for the special case where the matrix is empty (empty row or column)
     if a.shape[1] == 0 or b.shape[0] == 0:
         raise ValueError(
-            "shapes {} and {} not aligned: {} (dim 1) != {} (dim 0)".format(
-                a.shape, b.shape, a.shape[1], b.shape[0]
+            "shapes ({},{}) and ({},{}) not aligned: {} (dim 1) != {} (dim 0)".format(
+                a.shape[0], a.shape[1], b.shape[0], b.shape[1],
+                a.shape[1], b.shape[0]
             )
         )
 
