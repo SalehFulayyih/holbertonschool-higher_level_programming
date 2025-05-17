@@ -1,6 +1,12 @@
 #!/usr/bin/python3
 import numpy as np
 
+"""
+This module provides a function `lazy_matrix_mul` that multiplies two matrices
+using the NumPy library. The function ensures that the matrices are in the correct 
+format and raises errors if the shapes do not align or if the data is invalid.
+"""
+
 
 def lazy_matrix_mul(m_a, m_b):
     """Multiplies two matrices using NumPy.
