@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 import numpy as np
 
+
 def lazy_matrix_mul(m_a, m_b):
     """Multiplies two matrices using NumPy.
 
@@ -29,7 +30,8 @@ def lazy_matrix_mul(m_a, m_b):
     try:
         # Perform matrix multiplication
         result = np.matmul(m_a, m_b)
-        return result.astype(int)  # Convert result to integers to match expected output format
+        # Convert result to integers to match expected output format
+        return result.astype(int)
     except ValueError as e:
         # If the matrices' shapes do not align, raise an error with details
         raise ValueError(
