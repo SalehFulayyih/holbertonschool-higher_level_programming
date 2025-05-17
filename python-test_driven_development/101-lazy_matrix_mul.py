@@ -1,4 +1,10 @@
 #!/usr/bin/python3
+"""
+This module defines a function for lazy matrix multiplication
+using NumPy's matmul. It is part of test-driven development
+in higher level programming.
+"""
+
 import numpy as np
 
 
@@ -12,6 +18,9 @@ def lazy_matrix_mul(m_a, m_b):
 
     Returns:
         The product of the two matrices.
+
+    Raises:
+        ValueError: If the matrices can't be multiplied
     """
     try:
         return np.matmul(m_a, m_b)
