@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 """
 This module defines a function for lazy matrix multiplication
-using NumPy's dot function to preserve expected error messages.
+using NumPy's dot function to match specific output expectations.
 """
 
 import numpy as np
@@ -21,8 +21,12 @@ def lazy_matrix_mul(m_a, m_b):
     Raises:
         ValueError: For invalid types, dimensions, or contents
     """
+    # First, reject scalar-like inputs (like strings or numbers)
+    if not isinstance(m_a, (list, tuple)) or not isinstance(m_b, (list, tuple)):
+        raise ValueError("Scalar operands are not allowed, use '*' instead")
+
     try:
-        # Try converting to float arrays first to catch string data like "6"
+        # Try converting to float to catch invalid strings like "6"
         np.array(m_a, dtype=float)
         np.array(m_b, dtype=float)
     except Exception:
@@ -42,5 +46,4 @@ def lazy_matrix_mul(m_a, m_b):
         raise ValueError("Scalar operands are not allowed, use '*' instead")
 
     except ValueError as e:
-        # Let NumPy raise shape errors naturally
-        raise
+        raise  # Let NumPy's shape error message show
