@@ -12,27 +12,27 @@ def lazy_matrix_mul(m_a, m_b):
     Multiplies two matrices using NumPy's dot function.
 
     Args:
-        m_a: First matrix
-        m_b: Second matrix
+        m_a: First matrix (list of lists)
+        m_b: Second matrix (list of lists)
 
     Returns:
         The product of the two matrices as a NumPy array.
 
     Raises:
-        ValueError: For invalid types, dimensions, or contents
+        ValueError: For invalid types, dimensions, or contents.
     """
-    # Check if either of the inputs is a scalar (string or non-list-like)
+    # Check if both matrices are lists of lists (or tuples of tuples)
     if not isinstance(m_a, (list, tuple)) or not isinstance(m_b, (list, tuple)):
         raise ValueError("Scalar operands are not allowed, use '*' instead")
 
-    # Try to convert matrices to NumPy arrays with dtype=float
+    # Try converting the matrices to numpy arrays with a float data type
     try:
         a = np.array(m_a, dtype=float)
         b = np.array(m_b, dtype=float)
     except ValueError:
         raise ValueError("invalid data type for einsum")
 
-    # Ensure that the matrices have compatible shapes for multiplication
+    # Ensure matrices are aligned for multiplication
     if a.shape[1] != b.shape[0]:
         raise ValueError(
             "shapes ({},{}) and ({},{}) not aligned: {} (dim 1) != {} (dim 0)".format(
@@ -41,7 +41,7 @@ def lazy_matrix_mul(m_a, m_b):
             )
         )
 
-    # Check for the special case where the matrix is empty (empty row or column)
+    # Handle special case for empty matrices
     if a.shape[1] == 0 or b.shape[0] == 0:
         raise ValueError(
             "shapes ({},{}) and ({},{}) not aligned: {} (dim 1) != {} (dim 0)".format(
@@ -50,6 +50,8 @@ def lazy_matrix_mul(m_a, m_b):
             )
         )
 
-    # Perform matrix multiplication using np.dot and convert the result to integers
+    # Perform matrix multiplication
     result = np.dot(a, b)
-    return result.astype(int)  # Convert the result to integers
+
+    # Convert the result to integer and return
+    return result.astype(int)

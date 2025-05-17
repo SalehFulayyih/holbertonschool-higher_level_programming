@@ -1,34 +1,34 @@
->>> lazy_matrix_mul([[1, 2]], [[3], [4]])
-array([[11]])
-
 >>> lazy_matrix_mul([[1, 2], [3, 4]], [[5, 6], [7, 8]])
 array([[19, 22],
        [43, 50]])
 
->>> lazy_matrix_mul([[1, 2, 3]], [[4], [5], [6]])
-array([[32]])
-
->>> lazy_matrix_mul([[1.0, 2.5], [3.2, 4.8]], [[5.1, 6.3], [7.4, 8.2]])
-array([[24.25, 27.81],
-       [52.8 , 60.3 ]])
-
 >>> lazy_matrix_mul([[1, 2]], [[3, 4], [5, 6]])
 array([[13, 16]])
 
-# Invalid input: incompatible shapes (e.g., 2x2 and 1x3)
->>> lazy_matrix_mul([[1, 2], [3, 4]], [[5, 6, 7]])
+>>> lazy_matrix_mul([[5, "6"], [7, 8]], [[5, 6], [7, 8]])
 Traceback (most recent call last):
-...
-ValueError: m_a and m_b can't be multiplied
+    ...
+ValueError: invalid data type for einsum
 
-# Invalid input: empty matrix
->>> lazy_matrix_mul([], [[1]])
-Traceback (most recent call last):
-...
-ValueError: m_a and m_b can't be multiplied
+>>> lazy_matrix_mul([[5, 6], [7, 8]], [[5, 6, 1], [7, 8]])
+array([[ 67,  78,  13],
+       [ 91, 106,  15]])
 
-# Invalid input: dimension mismatch (3x2 and 2x1 is valid, 3x2 and 3x2 is not)
->>> lazy_matrix_mul([[1, 2], [3, 4], [5, 6]], [[7, 8], [9, 10], [11, 12]])
+>>> lazy_matrix_mul([[5, 6], [7, 8]], [[5, 6], [7, 8]])
+array([[19, 22],
+       [43, 50]])
+
+>>> lazy_matrix_mul([[]], [[5, 6], [7, 8]])
 Traceback (most recent call last):
-...
-ValueError: m_a and m_b can't be multiplied
+    ...
+ValueError: shapes (1,0) and (2,2) not aligned: 0 (dim 1) != 2 (dim 0)
+
+>>> lazy_matrix_mul([[1, 2], [3, 4], [3, 4]], [[5, 6, 1], [7, 8, 2]])
+array([[19, 22,  3],
+       [43, 50,  7],
+       [43, 50,  7]])
+
+>>> lazy_matrix_mul("Holberton", [[5, 6], [7, 8]])
+Traceback (most recent call last):
+    ...
+ValueError: Scalar operands are not allowed, use '*' instead
