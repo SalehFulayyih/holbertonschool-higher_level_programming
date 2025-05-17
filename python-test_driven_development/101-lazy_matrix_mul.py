@@ -1,23 +1,19 @@
-#!/usr/bin/python3.5
-"""
-
-Module composed by a function that multiplies 2 matrices
-
-"""
+#!/usr/bin/python3
 import numpy as np
 
 
 def lazy_matrix_mul(m_a, m_b):
-    """ Function that multiplies 2 matrices
+    """
+    Multiplies two matrices using NumPy's matmul function.
 
     Args:
-        m_a: matrix a
-        m_b: matrix b
+        m_a: First matrix
+        m_b: Second matrix
 
     Returns:
-        result of the multiplication
-
-
+        The product of the two matrices.
     """
-
-    return (np.matmul(m_a, m_b))
+    try:
+        return np.matmul(m_a, m_b)
+    except ValueError as e:
+        raise ValueError("m_a and m_b can't be multiplied") from e
