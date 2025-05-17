@@ -1,3 +1,5 @@
+#!/usr/bin/python3
+
 import numpy as np
 
 
@@ -16,4 +18,5 @@ def lazy_matrix_mul(m_a, m_b):
     except ValueError as e:
         # If the matrices' shapes do not align, raise an error with details
         raise ValueError(
-            f"shapes {m_a.shape} and {m_b.shape} not aligned: {m_a.shape[1]} (dim 1) != {m_b.shape[0]} (dim 0)") from e
+            f"shapes {m_a.shape} and {m_b.shape} not aligned: {m_a.shape[1]} (dim 1) != {m_b.shape[0]} (dim 0)"
+        ) from e
