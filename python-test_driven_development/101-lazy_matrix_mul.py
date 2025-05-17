@@ -37,6 +37,11 @@ def lazy_matrix_mul(m_a, m_b):
         raise ValueError(
             f"shapes {a.shape} and {b.shape} not aligned: {a.shape[1]} (dim 1) != {b.shape[0]} (dim 0)")
 
+    # Check for the special case where the matrix is empty (empty row or column)
+    if a.shape[1] == 0 or b.shape[0] == 0:
+        raise ValueError(
+            f"shapes {a.shape} and {b.shape} not aligned: {a.shape[1]} (dim 1) != {b.shape[0]} (dim 0)")
+
     # Perform matrix multiplication using np.dot and convert the result to integers
     result = np.dot(a, b)
     return result.astype(int)  # Convert the result to integers
