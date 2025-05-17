@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 """
 This module defines a function for lazy matrix multiplication
-using NumPy's dot function to match specific output expectations.
+using NumPy's dot function, with proper error handling and formatting.
 """
 
 import numpy as np
@@ -21,29 +21,25 @@ def lazy_matrix_mul(m_a, m_b):
     Raises:
         ValueError: For invalid types, dimensions, or contents
     """
-    # First, reject scalar-like inputs (like strings or numbers)
-    if not isinstance(m_a, (list, tuple)) or not isinstance(m_b, (list, tuple)):
-        raise ValueError("Scalar operands are not allowed, use '*' instead")
-
+    # Check if any element in m_a or m_b is a string
     try:
-        # Try converting to float to catch invalid strings like "6"
-        np.array(m_a, dtype=float)
-        np.array(m_b, dtype=float)
-    except Exception:
+        # Convert both matrices to numpy arrays to check for type validity
+        a = np.array(m_a, dtype=float)
+        b = np.array(m_b, dtype=float)
+    except ValueError:
         raise ValueError("invalid data type for einsum")
 
     try:
-        a = np.array(m_a)
-        b = np.array(m_b)
-
+        # Now perform matrix multiplication with np.dot
         if a.ndim < 2 or b.ndim < 2:
             raise ValueError(
                 "Scalar operands are not allowed, use '*' instead")
 
-        return np.dot(a, b)
+        return np.dot(a, b)  # Return the result as a NumPy array
 
     except TypeError:
         raise ValueError("Scalar operands are not allowed, use '*' instead")
 
     except ValueError as e:
-        raise  # Let NumPy's shape error message show
+        # Let NumPy's error message be raised for shape mismatch
+        raise
