@@ -4,9 +4,13 @@
 
 
 def pascal_triangle(n):
-    """Represent Pascal's Triangle of size n.
+    """Generate Pascal's Triangle of size n.
 
-    Returns a list of lists of integers representing the triangle.
+    Args:
+        n (int): The number of rows in the triangle.
+
+    Returns:
+        list: A list of lists of integers representing the triangle.
     """
     if n <= 0:
         return []
