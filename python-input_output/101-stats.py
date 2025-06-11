@@ -45,11 +45,9 @@ if __name__ == "__main__":
                 pass
 
             try:
-                if line[-2] in valid_codes:
-                    if status_codes.get(line[-2], -1) == -1:
-                        status_codes[line[-2]] = 1
-                    else:
-                        status_codes[line[-2]] += 1
+                code = line[-2]
+                if code in valid_codes:
+                    status_codes[code] = status_codes.get(code, 0) + 1
             except IndexError:
                 pass
 
