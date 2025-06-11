@@ -33,6 +33,12 @@ class SimpleAPIHandler(BaseHTTPRequestHandler):
             json_info = json.dumps(info)
             self.wfile.write(json_info.encode("utf-8"))
 
+        elif self.path == "/status":
+            self.send_response(200)
+            self.send_header("Content-Type", "text/plain; charset=utf-8")
+            self.end_headers()
+            self.wfile.write(b"OK")
+
         else:
             self.send_response(404)
             self.send_header("Content-Type", "text/plain; charset=utf-8")
