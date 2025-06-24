@@ -1,4 +1,5 @@
--- 0-list_databases.sql: list all current databases, sorted alphabetically
+-- 0-list_databases.sql: list all current databases alphabetically
 
-SHOW DATABASES
-ORDER BY `Database`;
+SELECT SCHEMA_NAME AS `Database`
+FROM INFORMATION_SCHEMA.SCHEMATA
+ORDER BY SCHEMA_NAME;
