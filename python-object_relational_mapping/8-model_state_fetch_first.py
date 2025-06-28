@@ -1,7 +1,5 @@
 #!/usr/bin/python3
-"""
-Prints the first State object from the database hbtn_0e_6_usa
-"""
+"""Print first State object from database"""
 
 from sys import argv
 from model_state import Base, State
