@@ -1,9 +1,10 @@
 #!/usr/bin/python3
 """
-Lists all State objects containing the letter 'a' from the database hbtn_0e_6_usa.
+Contains a script to list all State objects with the letter 'a' in their name
+from the database hbtn_0e_6_usa.
 
-Connects to a MySQL database using SQLAlchemy and prints states whose names
-contain the letter 'a', sorted by id in ascending order.
+Connects to a MySQL database using SQLAlchemy, fetches matching states ordered
+by id ascending, and prints their id and name.
 """
 
 from sys import argv
@@ -12,21 +13,25 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import Session
 
 
-def main():
+def list_states_with_a(username, password, db_name):
     """
-    Connects to the database and prints all State objects containing 'a'.
+    Connects to the MySQL database and lists State objects whose name contains 'a'.
+
+    Args:
+        username (str): MySQL username.
+        password (str): MySQL password.
+        db_name (str): Database name.
     """
     engine = create_engine(
-        'mysql+mysqldb://{}:{}@localhost/{}'.format(argv[1], argv[2], argv[3]),
+        'mysql+mysqldb://{}:{}@localhost/{}'.format(username, password, db_name),
         pool_pre_ping=True
     )
     session = Session(engine)
-    states_with_a = session.query(State).filter(
-        State.name.like('%a%')).order_by(State.id).all()
-    for state in states_with_a:
+    states = session.query(State).filter(State.name.like('%a%')).order_by(State.id).all()
+    for state in states:
         print(f"{state.id}: {state.name}")
     session.close()
 
 
 if __name__ == "__main__":
-    main()
+    list_states_with_a(argv[1], argv[2], argv[3])
