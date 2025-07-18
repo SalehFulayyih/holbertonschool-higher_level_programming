@@ -1,10 +1,20 @@
-# create_database.py
+#!/usr/bin/env python3
+""" Script to create and populate SQLite database """
 
 import sqlite3
+import os
+
+DB_FILE = 'my_products.db'
 
 def create_database():
-    conn = sqlite3.connect('products.db')
+    # Delete old database if exists
+    if os.path.exists(DB_FILE):
+        os.remove(DB_FILE)
+
+    # Create new database
+    conn = sqlite3.connect(DB_FILE)
     cursor = conn.cursor()
+
     cursor.execute('''
         CREATE TABLE IF NOT EXISTS Products (
             id INTEGER PRIMARY KEY,
@@ -13,7 +23,7 @@ def create_database():
             price REAL NOT NULL
         )
     ''')
-    cursor.execute('DELETE FROM Products')  # To avoid duplicates
+
     cursor.executemany('''
         INSERT INTO Products (id, name, category, price)
         VALUES (?, ?, ?, ?)
@@ -21,6 +31,7 @@ def create_database():
         (1, 'Laptop', 'Electronics', 799.99),
         (2, 'Coffee Mug', 'Home Goods', 15.99)
     ])
+
     conn.commit()
     conn.close()
 
