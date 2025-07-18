@@ -1,16 +1,25 @@
 import sqlite3
 import os
 
+DB_FILE = 'products.db'
+
+
+def is_valid_sqlite(db_path):
+    """Check if a file is a valid SQLite3 DB (via header bytes)."""
+    if not os.path.isfile(db_path):
+        return False
+    with open(db_path, 'rb') as f:
+        header = f.read(100)
+    return header.startswith(b'SQLite format 3\x00')
+
 
 def create_database():
-    db_path = 'products.db'
+    # If the DB exists and is invalid, delete it
+    if os.path.exists(DB_FILE) and not is_valid_sqlite(DB_FILE):
+        os.remove(DB_FILE)
 
-    # Delete existing database file if it exists (and might be corrupted)
-    if os.path.exists(db_path):
-        os.remove(db_path)
-
-    # Now create a fresh database
-    conn = sqlite3.connect(db_path)
+    # Create a fresh database
+    conn = sqlite3.connect(DB_FILE)
     cursor = conn.cursor()
 
     cursor.execute('''
